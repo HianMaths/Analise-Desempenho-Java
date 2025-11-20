@@ -7,6 +7,7 @@ public class Vetor implements EstruturasDados {
     private int[] elementos;
     private int tamanho;
     private int capacidade;
+    private boolean ordenado = true; // controla se o vetor está ordenado
 
     public Vetor(int capacidade) {
         this.capacidade = capacidade;
@@ -19,6 +20,11 @@ public class Vetor implements EstruturasDados {
         if (tamanho == capacidade) {
             redimensionar();
         }
+
+        if (tamanho > 0 && elemento < elementos[tamanho - 1]) {
+            ordenado = false;
+        }
+
         elementos[tamanho] = elemento;
         tamanho++;
     }
@@ -42,6 +48,12 @@ public class Vetor implements EstruturasDados {
     }
 
     public boolean buscaBinaria(int elemento) {
+        
+        if (!ordenado) {
+            System.out.println("ERRO: Busca binária não pode ser usada em vetor não ordenado!");
+            return false;
+        }
+        
         int esquerda = 0;
         int direita = tamanho - 1;
 
@@ -64,7 +76,7 @@ public class Vetor implements EstruturasDados {
     public int buscarPrimeiroElemento() {
         if (tamanho == 0) return -1;
         int valor = elementos[0];
-        buscaBinaria(valor); 
+        buscaSequencial(valor); 
         return valor;
     }
 
@@ -72,7 +84,7 @@ public class Vetor implements EstruturasDados {
     public int buscarUltimoElemento() {
         if (tamanho == 0) return -1;
         int valor = elementos[tamanho - 1];
-        buscaBinaria(valor);
+        buscaSequencial(valor);
         return valor;
     }
 
@@ -80,7 +92,7 @@ public class Vetor implements EstruturasDados {
     public int buscarElementoMeio() {
         if (tamanho == 0) return -1;
         int valor = elementos[tamanho / 2];
-        buscaBinaria(valor);
+        buscaSequencial(valor);
         return valor;
     }
 
@@ -89,14 +101,18 @@ public class Vetor implements EstruturasDados {
         if (tamanho == 0) return -1;
         int indiceAleatorio = (int)(Math.random() * tamanho);
         int valor = elementos[indiceAleatorio];
-        buscaBinaria(valor);
+        buscaSequencial(valor);
         return valor;
     }
 
     @Override
     public int buscarElementoInexistente() {
-        buscaBinaria(-1); 
+        buscaSequencial(-1); 
         return -1;
+    }
+
+    public boolean isOrdenado() {
+        return ordenado;
     }
 
     public int getTamanho() {

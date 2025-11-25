@@ -4,43 +4,41 @@ import estruturas.EstruturasDados;
 
 public class Vetor implements EstruturasDados {
 
-    private int[] elementos;
-    private int tamanho;
+    private int[] dados;
+    private int qtd;
     private int capacidade;
-    private boolean ordenado = true; // controla se o vetor está ordenado
+    private boolean ordenado = true; 
 
     public Vetor(int capacidade) {
         this.capacidade = capacidade;
-        this.elementos = new int[capacidade];
-        this.tamanho = 0;
+        this.dados = new int[capacidade];
     }
 
     @Override
     public void inserir(int elemento) {
-        if (tamanho == capacidade) {
+        if (qtd == capacidade) {
             redimensionar();
         }
 
-        if (tamanho > 0 && elemento < elementos[tamanho - 1]) {
+        if (qtd > 0 && elemento < dados[qtd - 1]) {
             ordenado = false;
         }
 
-        elementos[tamanho] = elemento;
-        tamanho++;
+        dados[qtd++] = elemento;
     }
 
     private void redimensionar() {
         capacidade *= 2;
         int[] novoArray = new int[capacidade];
-        for (int i = 0; i < tamanho; i++) {
-            novoArray[i] = elementos[i];
+        for (int i = 0; i < qtd; i++) {
+            novoArray[i] = dados[i];
         }
-        elementos = novoArray;
+        dados = novoArray;
     }
 
     public boolean buscaSequencial(int elemento) {
-        for (int i = 0; i < tamanho; i++) {
-            if (elementos[i] == elemento) {
+        for (int i = 0; i < qtd; i++) {
+            if (dados[i] == elemento) {
                 return true;
             }
         }
@@ -54,19 +52,19 @@ public class Vetor implements EstruturasDados {
             return false;
         }
         
-        int esquerda = 0;
-        int direita = tamanho - 1;
+        int inicio = 0;
+        int fim = qtd - 1;
 
-        while (esquerda <= direita) {
-            int meio = esquerda + (direita - esquerda) / 2;
+        while (inicio <= fim) {
+            int meio = (inicio + fim) / 2;
+            int v = dados[meio];
 
-            if (elementos[meio] == elemento) {
+            if (v == elemento) {
                 return true;
-            }
-            if (elementos[meio] < elemento) {
-                esquerda = meio + 1;
+            } else if (v < elemento) {
+                inicio = meio + 1;
             } else {
-                direita = meio - 1;
+                fim = meio - 1;
             }
         }
         return false;
@@ -74,59 +72,44 @@ public class Vetor implements EstruturasDados {
 
     @Override
     public int buscarPrimeiroElemento() {
-        if (tamanho == 0) return -1;
-        int valor = elementos[0];
-        buscaSequencial(valor); 
-        return valor;
+        if (qtd == 0) return -1;
+        return dados[0]; 
     }
 
     @Override
     public int buscarUltimoElemento() {
-        if (tamanho == 0) return -1;
-        int valor = elementos[tamanho - 1];
-        buscaSequencial(valor);
-        return valor;
+        if (qtd == 0) return -1;
+        return dados[qtd - 1];
     }
 
     @Override
     public int buscarElementoMeio() {
-        if (tamanho == 0) return -1;
-        int valor = elementos[tamanho / 2];
-        buscaSequencial(valor);
-        return valor;
+        if (qtd == 0) return -1;
+        return dados[qtd / 2];
     }
 
     @Override
     public int buscarElementoAleatorio() {
-        if (tamanho == 0) return -1;
-        int indiceAleatorio = (int)(Math.random() * tamanho);
-        int valor = elementos[indiceAleatorio];
-        buscaSequencial(valor);
-        return valor;
+        if (qtd == 0) return -1;
+        int idx = (int) (Math.random() * qtd);
+        return dados[idx];
     }
 
     @Override
     public int buscarElementoInexistente() {
-        buscaSequencial(-1); 
-        return -1;
+        return -1; 
+    }
+
+   public void setOrdenado(boolean ordenado) {
+        this.ordenado = ordenado;
     }
 
     public boolean isOrdenado() {
-        return ordenado;
-    }
-
-    public int getTamanho() {
-        return tamanho;
+        return this.ordenado;
     }
 
     public int getElemento(int indice) {
-        if (indice >= 0 && indice < tamanho) {
-            return elementos[indice];
-        }
-        return -1;
-    }
-
-    public int[] getArray() {
-        return elementos;
+        if (indice < 0 || indice >= qtd) return -1;
+        return dados[indice];
     }
 }

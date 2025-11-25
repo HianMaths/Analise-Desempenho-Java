@@ -23,4 +23,8 @@ public class Cronometro {
     public double getTempoSegundos() {
         return (fim - inicio) / 1000000000.0;
     }
+
+    public double getTempoNanoSegundos() {
+        return (fim - inicio);
+    }
 }

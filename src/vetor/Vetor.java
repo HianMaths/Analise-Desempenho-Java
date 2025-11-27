@@ -97,6 +97,7 @@ public class Vetor implements EstruturasDados {
 
     @Override
     public int buscarElementoInexistente() {
+        buscaSequencial(-1);
         return -1; 
     }
 

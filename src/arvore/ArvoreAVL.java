@@ -7,7 +7,6 @@ public class ArvoreAVL implements EstruturasDados {
     private No raiz;
     private int[] valoresInseridos = new int[10];
     private int tamanho = 0;
-    private Rotacoes rotacoes = new Rotacoes();
 
     // INSERÇÃO AVL
     @Override
@@ -27,7 +26,7 @@ public class ArvoreAVL implements EstruturasDados {
             return no; 
         }
 
-        return rotacoes.balancear(no);
+        return balancear(no);
     }
 
     private void armazenarValor(int valor) {
@@ -72,5 +71,78 @@ public class ArvoreAVL implements EstruturasDados {
     @Override
     public int buscarElementoInexistente() {
         return -1;
+    }
+
+    // MÉTODOS DE ROTAÇÕES
+    // Balanceia o nó e retorna o nó novo raiz
+    private No balancear(No no) {
+        int balanceamento = calcularBalanceamento(no);
+
+        // Caso direita pesada
+        if (balanceamento > 1) {
+            if (calcularBalanceamento(no.getDireita()) >= 0) {
+                no = rotacaoEsquerda(no);
+            } else {
+                no = rotacaoDireitaEsquerda(no);
+            }
+        }
+        // Caso esquerda pesada
+        else if (balanceamento < -1) {
+            if (calcularBalanceamento(no.getEsquerda()) <= 0) {
+                no = rotacaoDireita(no);
+            } else {
+                no = rotacaoEsquerdaDireita(no);
+            }
+        }
+
+        return no;
+    }
+
+    // Rotação simples à direita
+    private No rotacaoDireita(No x) {
+        No y = x.getEsquerda();
+        No z = y.getDireita();
+
+        y.setDireita(x);
+        x.setEsquerda(z);
+
+        return y;
+    }
+
+    // Rotação simples à esquerda
+    private No rotacaoEsquerda(No x) {
+        No y = x.getDireita();
+        No z = y.getEsquerda();
+
+        y.setEsquerda(x);
+        x.setDireita(z);
+
+        return y;
+    }
+
+    // Rotação dupla esquerda-direita
+    private No rotacaoEsquerdaDireita(No no) {
+        no.setEsquerda(rotacaoEsquerda(no.getEsquerda()));
+        return rotacaoDireita(no);
+    }
+
+    // Rotação dupla direita-esquerda
+    private No rotacaoDireitaEsquerda(No no) {
+        no.setDireita(rotacaoDireita(no.getDireita()));
+        return rotacaoEsquerda(no);
+    }
+
+    // Calcula o balanceamento: altura(direita) - altura(esquerda)
+    private int calcularBalanceamento(No no) {
+        if (no == null) return 0;
+        return altura(no.getDireita()) - altura(no.getEsquerda());
+    }
+
+    // Calcula altura de um nó
+    private int altura(No no) {
+        if (no == null) return 0;
+        int esquerda = altura(no.getEsquerda());
+        int direita = altura(no.getDireita());
+        return 1 + Math.max(esquerda, direita);
     }
 }

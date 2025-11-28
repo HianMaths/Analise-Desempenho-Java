@@ -45,6 +45,22 @@ public class ArvoreABB implements EstruturasDados {
     }
 
     // MÉTODOS DE BUSCA
+    public boolean buscar(int valor) {
+        return buscarABB(raiz, valor);
+    }
+
+    private boolean buscarABB(No no, int valor) {
+        if (no == null) return false;
+        
+        if (valor == no.getValor()) {
+            return true;
+        } else if (valor < no.getValor()) {
+            return buscarABB(no.getEsquerda(), valor);
+        } else {
+            return buscarABB(no.getDireita(), valor);
+        }
+    }
+
     @Override
     public int buscarPrimeiroElemento() {
         if (raiz == null) return -1;

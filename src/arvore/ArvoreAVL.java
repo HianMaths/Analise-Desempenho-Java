@@ -39,6 +39,22 @@ public class ArvoreAVL implements EstruturasDados {
     }
 
     // MÉTODOS DE BUSCA
+    public boolean buscar(int valor) {
+        return buscarAVL(raiz, valor);
+    }
+
+    private boolean buscarAVL(No no, int valor) {
+        if (no == null) return false;
+        
+        if (valor == no.getValor()) {
+            return true;
+        } else if (valor < no.getValor()) {
+            return buscarAVL(no.getEsquerda(), valor);
+        } else {
+            return buscarAVL(no.getDireita(), valor);
+        }
+    }
+
     @Override
     public int buscarPrimeiroElemento() {
         if (raiz == null) return -1;

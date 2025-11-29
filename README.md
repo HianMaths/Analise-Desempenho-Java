@@ -61,9 +61,13 @@ ANALISE-DESEMPENHO-JAVA/
     * **✔ Aleatória**
 
 **Métricas Coletadas**
+
 O programa mede:
+
 ⏱ **Tempo médio de inserção** por estrutura
+
 ⏱ **Tempo médio de busca** por estrutura
+
 A classe `Cronometro` é responsável pela medição precisa em nanosegundos.   
 
 **Como Executar**

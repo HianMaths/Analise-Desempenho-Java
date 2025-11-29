@@ -27,7 +27,4 @@ public class GeradorDados {
         return arr;
     }
     
-    public static void seed(long seed) {
-        RAND.setSeed(seed);
-    }
 }

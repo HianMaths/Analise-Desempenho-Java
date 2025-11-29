@@ -85,7 +85,9 @@ java -cp out TestesDesempenhoEstruturas
 <br>
 
 **Funcionamento Geral**
+
 O fluxo do programa é:
+
 * `GeradorDados` cria os vetores de teste.
 * Cada estrutura recebe N elementos enquanto o `Cronometro` mede o tempo.
 * A busca é testada usando o mesmo conjunto de dados.

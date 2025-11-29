@@ -67,7 +67,9 @@ O programa mede:
 A classe `Cronometro` é responsável pela medição precisa em nanosegundos.   
 
 **Como Executar**
+
 **1** - Certifique-se de ter o **Java 17+** instalado.
+
 **2 - Compile:**
 ```
 javac -d out src/**/*.java

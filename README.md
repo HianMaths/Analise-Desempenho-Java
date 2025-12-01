@@ -57,7 +57,7 @@ ANALISE-DESEMPENHO-JAVA/
     * **10.000 elementos**
 * E em três tipos de entrada:
     * **✔ Ordenada**
-    * **✔ Reversa**
+    * **✔ Inversa**
     * **✔ Aleatória**
 
 **Métricas Coletadas**

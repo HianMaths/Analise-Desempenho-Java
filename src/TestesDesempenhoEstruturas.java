@@ -47,6 +47,8 @@ public class TestesDesempenhoEstruturas {
     private static void testar(EstruturasDados estrutura, int[] dados, String nome) {
 
         double tInsercao = 0;
+        double tBubble = 0;;
+        double tQuick = 0;
         double tPrimeiro = 0;
         double tUltimo = 0;
         double tMeio = 0;
@@ -89,6 +91,27 @@ public class TestesDesempenhoEstruturas {
             estrutura.buscarElementoInexistente();
             c.parar();
             tInexistente += c.getTempoNanoSegundos();
+
+            // medições separadas para os algoritmos de ordenação (apenas para Vetor)
+            if (estrutura instanceof Vetor) {
+                // bubble
+                Vetor vBubble = new Vetor(dados.length);
+                for (int x : dados) vBubble.inserir(x);
+                Cronometro cb = new Cronometro();
+                cb.iniciar();
+                vBubble.ordenarBubble();
+                cb.parar();
+                tBubble += cb.getTempoNanoSegundos();
+
+                // quick
+                Vetor vQuick = new Vetor(dados.length);
+                for (int x : dados) vQuick.inserir(x);
+                Cronometro cq = new Cronometro();
+                cq.iniciar();
+                vQuick.ordenarQuick();
+                cq.parar();
+                tQuick += cq.getTempoNanoSegundos();
+            }
         }
 
         tInsercao /= REPETICOES;
@@ -97,6 +120,8 @@ public class TestesDesempenhoEstruturas {
         tMeio /= REPETICOES;
         tInexistente /= REPETICOES;
         for (int i = 0; i < 3; i++) tAleatorios[i] /= REPETICOES;
+        tBubble /= REPETICOES;
+        tQuick /= REPETICOES;
 
         // resultados
         System.out.printf("\n--- Resultados (%s) ---\n", nome);
@@ -107,6 +132,12 @@ public class TestesDesempenhoEstruturas {
         System.out.printf("Buscas aleatórias: %.3f / %.3f / %.3f ns\n",
                 tAleatorios[0], tAleatorios[1], tAleatorios[2]);
         System.out.printf("Busca inexistente: %.3f ns\n", tInexistente);
+
+        // resultados das ordenações 
+        if (estrutura instanceof Vetor) {
+            System.out.printf("Tempo ordenar Bubble: %.3f ns\n", tBubble);
+            System.out.printf("Tempo ordenar Quick: %.3f ns\n", tQuick);
+        }
 
         // binária só se for vetor ordenado
         if (estrutura instanceof Vetor v && v.isOrdenado()) {

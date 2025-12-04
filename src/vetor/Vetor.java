@@ -113,4 +113,15 @@ public class Vetor implements EstruturasDados {
         if (indice < 0 || indice >= qtd) return -1;
         return dados[indice];
     }
+
+     // Métodos que delegam para as classes de ordenação existentes
+    public void ordenarBubble() {
+        OrdenacaoSimples.bubbleSort(this.dados, this.qtd);
+        this.ordenado = true;
+    }
+
+    public void ordenarQuick() {
+        OrdenacaoAvancada.quickSort(this.dados, this.qtd);
+        this.ordenado = true;
+    }
 }
